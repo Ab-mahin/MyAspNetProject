@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
     
 builder.Services.AddControllersWithViews();
 
+// Db Services add
 var provider = builder.Services.BuildServiceProvider();
 var config = provider.GetRequiredService<IConfiguration>();
 builder.Services.AddDbContext<EmployeeDbContext>(item => item.UseSqlServer(config.GetConnectionString("dbcs")));
@@ -34,3 +35,6 @@ app.MapControllerRoute(
 
 app.Run();
 
+
+// docker rm ms-sql-server
+// docker run -d --name ms-sql-server -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=MyDocker@123" -p 1433:1433 mcr.microsoft.com/azure-sql-edge:latest

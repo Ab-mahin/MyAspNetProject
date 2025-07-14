@@ -6,7 +6,8 @@ namespace MyAspNetProject.Models;
 
 public class Employee
 {
-    [Key] 
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
     public int Id { get; set; }
     [Column("EmployeeName", TypeName = "varchar(100)")]
     public string Name { get; set; }

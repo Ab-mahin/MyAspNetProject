@@ -7,12 +7,12 @@ namespace MyAspNetProject.Controllers;
 public class HomeController : Controller
 {
     private readonly EmployeeDbContext _employeeDb;
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
+    // private readonly ILogger<HomeController> _logger;
+    //
+    // public HomeController(ILogger<HomeController> logger)
+    // {
+    //     _logger = logger;
+    // }
 
     public HomeController(EmployeeDbContext employeeDb)
     {
@@ -21,7 +21,8 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        var stdData = _employeeDb.Employees.ToList();
+        return View(stdData); 
     }
     [HttpPost]
     public string Index(Employee employee)

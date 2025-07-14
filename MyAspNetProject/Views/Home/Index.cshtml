@@ -1,60 +1,44 @@
-@model Employee
+@model IEnumerable<MyAspNetProject.Models.Employee>
+
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Employee List";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-<img src="~/images/Linux.webp" height="200" width="500" alt="New image" />
-<br />
-<br />
-<h1>Image 1</h1>
+<h1>Employee List</h1>
 
-<img src="~/images/reactReadux.webp" asp-append-version="true" height="200" width="500" alt="New image" />
-<br />
-<br />
-<h1>Image 2</h1>
-
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            <form class="d-grid" asp-action="Index" asp-controller="Home" method="post">
-                <label asp-for="Name">Enter Name</label>
-                <input asp-for="Name" placeholder="Enter Name" class="form-control" />
-                <br />
-                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control">
-                    <option value="">Select Gender</option>
-                </select>
-                <br />
-
-                <input asp-for="Age" placeholder="Enter Age" class="form-control" />
-                <br />
-                <input asp-for="Designation" placeholder="Enter Designation" class="form-control" />
-                <br />
-                <input asp-for="Salary" placeholder="Enter Salary" class="form-control" />
-                <br />
-
-                <label>Married</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" asp-for="Married" value="Yes">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Yes
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" asp-for="Married" value="No">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        No
-                    </label>
-                </div>
-                <br />
-
-                <textarea asp-for="Description" class="form-control" placeholder="Enter Description" rows="5"></textarea>
-                <br />
-                <input type="Submit" value="Submit" class="btn btn-outline-primary btn-block" />
-            </form>
-        </div>
-    </div>
-</div>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Designation</th>
+        <th>Salary</th>
+        <th>Married</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model != null && Model.Any())
+    {
+        foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.Id</td>
+                <td>@emp.Name</td>
+                <td>@emp.Gender</td>
+                <td>@emp.Age</td>
+                <td>@emp.Designation</td>
+                <td>@emp.Salary</td>
+                <td>@emp.Married</td>
+                <td>@emp.Description</td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr><td colspan="8">No employees found.</td></tr>
+    }
+    </tbody>
+</table>
