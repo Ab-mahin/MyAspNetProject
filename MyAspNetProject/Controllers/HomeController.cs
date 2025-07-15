@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using MyAspNetProject.Models;
 
 namespace MyAspNetProject.Controllers;
@@ -46,12 +47,76 @@ public class HomeController : Controller
     }
     
     
-    public async Task<IActionResult> Details(int id)
+    public async Task<IActionResult> Details(int? id)
     {
+        if (id == null || _employeeDb.Employees.Find(id)  == null)
+        {
+            return NotFound();
+        }
         var stdData =  await _employeeDb.Employees.FirstOrDefaultAsync(x => x.Id == id);
+
+        if (stdData == null)
+        {
+            return NotFound();
+        }
+        
         return View(stdData); 
     }
+
+    public async Task<IActionResult> Edit(int? id)
+    {   
+        if (id == null || _employeeDb.Employees.Find(id)  == null)
+        {
+            return NotFound();
+        }
+        var stdData =  await _employeeDb.Employees.FindAsync(id);
+        if (stdData == null)
+        {
+            return NotFound();
+        }
+        return View(stdData);
+    }
     
+    [HttpPost]
+    public async Task<IActionResult> Edit(int? id , Employee emp)
+    {
+        if (id != emp.Id)
+        {
+            return NotFound();
+        }
+        if (ModelState.IsValid)
+        {
+            _employeeDb.Employees.Update(emp);
+            await _employeeDb.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+        return View(emp);
+    }
+
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (id == null || _employeeDb.Employees.Find(id)  == null)
+        {
+            return NotFound();
+        }
+        var stdData =  await _employeeDb.Employees.FirstOrDefaultAsync(x => x.Id == id);
+        if (stdData == null)
+        {
+            return NotFound();
+        }
+        return View(stdData);
+    }
+    [HttpPost, ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(int? id)
+    {
+        var stdData =  await _employeeDb.Employees.FindAsync(id);
+        if (stdData != null)
+        {
+            _employeeDb.Employees.Remove(stdData);
+        }
+        await _employeeDb.SaveChangesAsync();
+        return RedirectToAction("Index");
+    }
     // [HttpPost]
     // public string Index(Employee employee)
     // {
