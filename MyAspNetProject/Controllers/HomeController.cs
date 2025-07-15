@@ -24,11 +24,21 @@ public class HomeController : Controller
         var stdData = _employeeDb.Employees.ToList();
         return View(stdData); 
     }
-    [HttpPost]
-    public string Index(Employee employee)
+    
+    
+    
+    public string Create()
     {
-        return "Name " + employee.Name + " ,Gender " + employee.Gender + " ,Age " + employee.Age + " ,Salary " + employee.Salary + " ,Department " + employee.Description;
+        
+        return "hi Create"; 
     }
+    
+    
+    // [HttpPost]
+    // public string Index(Employee employee)
+    // {
+    //     return "Name " + employee.Name + " ,Gender " + employee.Gender + " ,Age " + employee.Age + " ,Salary " + employee.Salary + " ,Department " + employee.Description;
+    // }
     public IActionResult Privacy()
     {
         return View();
