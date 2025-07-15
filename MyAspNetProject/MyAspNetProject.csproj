@@ -30,4 +30,7 @@
     <Folder Include="Repository\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\_ValidationScriptsPartial.cshtml" />
+  </ItemGroup>
 </Project>
