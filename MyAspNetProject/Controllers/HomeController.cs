@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyAspNetProject.Models;
 
 namespace MyAspNetProject.Controllers;
@@ -19,9 +20,9 @@ public class HomeController : Controller
         _employeeDb = employeeDb;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var stdData = _employeeDb.Employees.ToList();
+        var stdData =  await _employeeDb.Employees.ToListAsync();
         return View(stdData); 
     }
     
@@ -44,6 +45,12 @@ public class HomeController : Controller
         return  View(emp); 
     }
     
+    
+    public async Task<IActionResult> Details(int id)
+    {
+        var stdData =  await _employeeDb.Employees.FirstOrDefaultAsync(x => x.Id == id);
+        return View(stdData); 
+    }
     
     // [HttpPost]
     // public string Index(Employee employee)
