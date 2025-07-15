@@ -1,138 +1,157 @@
-﻿using System.Diagnostics;
+﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using MyAspNetProject.Models;
 
-namespace MyAspNetProject.Controllers;
-
-public class HomeController : Controller
+namespace MyAspNetProject.Controllers
 {
-    private readonly EmployeeDbContext _employeeDb;
-    // private readonly ILogger<HomeController> _logger;
-    //
-    // public HomeController(ILogger<HomeController> logger)
-    // {
-    //     _logger = logger;
-    // }
+    public class HomeController : Controller
+    {
+        private readonly EmployeeDbContext _context;
 
-    public HomeController(EmployeeDbContext employeeDb)
-    {
-        _employeeDb = employeeDb;
-    }
+        public HomeController(EmployeeDbContext context)
+        {
+            _context = context;
+        }
 
-    public async Task<IActionResult> Index()
-    {
-        var stdData =  await _employeeDb.Employees.ToListAsync();
-        return View(stdData); 
-    }
-    
-    
-    
-    public IActionResult Create()
-    {
-        return  View(); 
-    }
-    
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Employee emp)
-    {
-        if (ModelState.IsValid)
+        // GET: HomeController
+        public async Task<IActionResult> Index()
         {
-            await _employeeDb.Employees.AddAsync(emp);
-            await _employeeDb.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return View(await _context.Employees.ToListAsync());
         }
-        return  View(emp); 
-    }
-    
-    
-    public async Task<IActionResult> Details(int? id)
-    {
-        if (id == null || _employeeDb.Employees.Find(id)  == null)
-        {
-            return NotFound();
-        }
-        var stdData =  await _employeeDb.Employees.FirstOrDefaultAsync(x => x.Id == id);
 
-        if (stdData == null)
+        // GET: HomeController/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            return NotFound();
-        }
-        
-        return View(stdData); 
-    }
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-    public async Task<IActionResult> Edit(int? id)
-    {   
-        if (id == null || _employeeDb.Employees.Find(id)  == null)
-        {
-            return NotFound();
-        }
-        var stdData =  await _employeeDb.Employees.FindAsync(id);
-        if (stdData == null)
-        {
-            return NotFound();
-        }
-        return View(stdData);
-    }
-    
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id , Employee emp)
-    {
-        if (id != emp.Id)
-        {
-            return NotFound();
-        }
-        if (ModelState.IsValid)
-        {
-            _employeeDb.Employees.Update(emp);
-            await _employeeDb.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-        return View(emp);
-    }
+            var employee = await _context.Employees
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
 
-    public async Task<IActionResult> Delete(int? id)
-    {
-        if (id == null || _employeeDb.Employees.Find(id)  == null)
-        {
-            return NotFound();
+            return View(employee);
         }
-        var stdData =  await _employeeDb.Employees.FirstOrDefaultAsync(x => x.Id == id);
-        if (stdData == null)
-        {
-            return NotFound();
-        }
-        return View(stdData);
-    }
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? id)
-    {
-        var stdData =  await _employeeDb.Employees.FindAsync(id);
-        if (stdData != null)
-        {
-            _employeeDb.Employees.Remove(stdData);
-        }
-        await _employeeDb.SaveChangesAsync();
-        return RedirectToAction("Index");
-    }
-    // [HttpPost]
-    // public string Index(Employee employee)
-    // {
-    //     return "Name " + employee.Name + " ,Gender " + employee.Gender + " ,Age " + employee.Age + " ,Salary " + employee.Salary + " ,Department " + employee.Description;
-    // }
-    public IActionResult Privacy()
-    {
-        return View();
-    }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        // GET: HomeController/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: HomeController/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name,Gender,Age,Designation,Salary,Married,Description")] Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(employee);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(employee);
+        }
+
+        // GET: HomeController/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var employee = await _context.Employees.FindAsync(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return View(employee);
+        }
+
+        // POST: HomeController/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Gender,Age,Designation,Salary,Married,Description")] Employee employee)
+        {
+            if (id != employee.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(employee);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EmployeeExists(employee.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(employee);
+        }
+
+        // GET: HomeController/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var employee = await _context.Employees
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return View(employee);
+        }
+
+        // POST: HomeController/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var employee = await _context.Employees.FindAsync(id);
+            if (employee != null)
+            {
+                _context.Employees.Remove(employee);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool EmployeeExists(int id)
+        {
+            return _context.Employees.Any(e => e.Id == id);
+        }
     }
 }
