@@ -27,10 +27,21 @@ public class HomeController : Controller
     
     
     
-    public string Create()
+    public IActionResult Create()
     {
-        
-        return "hi Create"; 
+        return  View(); 
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> Create(Employee emp)
+    {
+        if (ModelState.IsValid)
+        {
+            await _employeeDb.Employees.AddAsync(emp);
+            await _employeeDb.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+        return  View(emp); 
     }
     
     
