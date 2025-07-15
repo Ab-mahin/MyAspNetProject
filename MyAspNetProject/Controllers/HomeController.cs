@@ -35,6 +35,7 @@ public class HomeController : Controller
     }
     
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Employee emp)
     {
         if (ModelState.IsValid)
@@ -78,6 +79,7 @@ public class HomeController : Controller
     }
     
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int? id , Employee emp)
     {
         if (id != emp.Id)
@@ -107,6 +109,7 @@ public class HomeController : Controller
         return View(stdData);
     }
     [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
         var stdData =  await _employeeDb.Employees.FindAsync(id);
