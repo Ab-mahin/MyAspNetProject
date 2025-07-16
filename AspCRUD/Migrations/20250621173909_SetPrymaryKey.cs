@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace MyAspNetProject.Migrations
+namespace AspCRUD.Migrations
 {
     /// <inheritdoc />
     public partial class SetPrymaryKey : Migration

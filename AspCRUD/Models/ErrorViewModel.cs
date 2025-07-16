@@ -1,4 +1,4 @@
-﻿namespace MyAspNetProject.Models;
+﻿namespace AspCRUD.Models;
 
 public class ErrorViewModel
 {

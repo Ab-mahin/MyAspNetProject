@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace MyAspNetProject.Models;
+namespace AspCRUD.Models;
 
 public class EmployeeDbContext  : DbContext
 {

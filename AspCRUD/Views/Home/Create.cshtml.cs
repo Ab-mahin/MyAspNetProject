@@ -2,18 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspCRUD.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using MyAspNetProject.Models;
 
-namespace MyAspNetProject.Views.Home
+namespace AspCRUD.Views.Home
 {
     public class CreateModel : PageModel
     {
-        private readonly MyAspNetProject.Models.EmployeeDbContext _context;
+        private readonly EmployeeDbContext _context;
 
-        public CreateModel(MyAspNetProject.Models.EmployeeDbContext context)
+        public CreateModel(EmployeeDbContext context)
         {
             _context = context;
         }
