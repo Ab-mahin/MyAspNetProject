@@ -1,0 +1,33 @@
+﻿@model List<UseTbls>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="text-right mb-3">
+    <a asp-action="Login" asp-controller="Home" class="btn btn-primary">Login</a>
+</div>
+
+<h2 class="mt-4">User List</h2>
+
+<table class="table table-bordered mt-3">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Name</td>
+            <td>@user.Email</td>
+        </tr>
+    }
+    </tbody>
+</table>

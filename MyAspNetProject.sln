@@ -5,6 +5,8 @@ VisualStudioVersion = 25.0.1706.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspCRUD", "AspCRUD\AspCRUD.csproj", "{5EB04C1D-1D82-42C0-90C7-53D3B8ED36FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginForm", "LoginForm\LoginForm.csproj", "{F11D37EE-0EF3-4351-9BB9-417DC6DC0E60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5EB04C1D-1D82-42C0-90C7-53D3B8ED36FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EB04C1D-1D82-42C0-90C7-53D3B8ED36FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EB04C1D-1D82-42C0-90C7-53D3B8ED36FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F11D37EE-0EF3-4351-9BB9-417DC6DC0E60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F11D37EE-0EF3-4351-9BB9-417DC6DC0E60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F11D37EE-0EF3-4351-9BB9-417DC6DC0E60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F11D37EE-0EF3-4351-9BB9-417DC6DC0E60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

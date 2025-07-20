@@ -1,0 +1,10 @@
+@model LoginForm.Models.UseTbls
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1>Dashboard</h1>
+<h2>@ViewBag.MySession</h2>
+<div class="text-right mb-3">
+    <a asp-action="Logout" asp-controller="Home" class="btn btn-primary">Logout</a>
+</div>
